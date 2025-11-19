@@ -1,0 +1,125 @@
+# Neural Style Transfer Suite - .gitignore
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+ENV/
+env/
+.venv
+
+# PyCharm
+.idea/
+
+# VS Code
+.vscode/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model Files (too large for git)
+*.pth
+*.pt
+*.ckpt
+checkpoints/
+models/
+*.h5
+*.pkl
+
+# Data
+data/
+dataset/
+datasets/
+*.zip
+*.tar.gz
+
+# Output Files
+outputs/
+output/
+results/
+stylized/
+*.mp4
+*.avi
+*.mov
+*.mkv
+
+# Style Library
+style_library/
+
+# Images (except examples)
+*.jpg
+*.jpeg
+*.png
+*.bmp
+*.tiff
+!examples/*.jpg
+!examples/*.jpeg
+!examples/*.png
+!docs/images/*.jpg
+!docs/images/*.png
+
+# Logs
+logs/
+*.log
+tensorboard/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary Files
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# Cache
+.cache/
+*.cache
+
+# Coverage
+.coverage
+htmlcov/
+
+# Testing
+.pytest_cache/
+.tox/
+
+# Distribution
+*.whl
+
+# Environment Variables
+.env
+.env.local
+
+# Windows
+*.lnk
+$RECYCLE.BIN/
+
+# CUDA
+*.cu.o
+*.fatbin
+*.cubin
