@@ -2,6 +2,46 @@
 
 A comprehensive autonomous trading bot simulator built for Windows 11 with advanced features including multiple trading strategies, backtesting, risk management, paper trading, machine learning predictions, and real-time analytics.
 
+## 💻 Two Ways to Use
+
+### 🖥️ Windows GUI Application (Recommended for Windows 11)
+
+Modern, production-ready Windows 11 application with:
+- **Full GUI Interface** - No command line required
+- **System Tray Integration** - Runs in background
+- **Real-Time Updates** - Live dashboard and charts
+- **Windows Notifications** - Native toast notifications
+- **Easy Installation** - Professional Windows installer
+- **One-Click Trading** - Start/stop with a button
+
+**Quick Start:**
+1. Download `TradingBotSimulator-Setup.exe`
+2. Run installer
+3. Launch from Start Menu
+4. See [QUICK_START.md](QUICK_START.md) for 5-minute tutorial
+
+**Or run from source:**
+```bash
+python windows_app.py
+# Or use: run_windows_app.bat
+```
+
+📖 **Documentation:**
+- [Quick Start Guide](QUICK_START.md) - Get running in 5 minutes
+- [User Guide](USER_GUIDE.md) - Complete feature documentation
+- [Build Guide](WINDOWS_BUILD_GUIDE.md) - Build your own installer
+
+### 🖥️ Command Line Interface (Cross-Platform)
+
+Traditional CLI for advanced users and automation:
+```bash
+python main.py backtest --symbol AAPL --strategy macd
+```
+
+See [CLI Usage](#🎯-quick-start) below for details.
+
+---
+
 ## 🚀 Features
 
 ### 1. **Multiple Strategy Algorithms**

@@ -63,3 +63,13 @@ Thumbs.db
 # Trading data
 trading_bot.log
 *.db
+
+# Windows build artifacts
+*.spec.save
+Output/
+*.exe.manifest
+resources/icon.ico.bak
+
+# PyInstaller
+*.manifest
+*.spec~

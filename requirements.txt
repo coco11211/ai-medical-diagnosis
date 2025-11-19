@@ -42,8 +42,17 @@ schedule>=1.2.0
 plyer>=2.1.0
 win10toast>=0.9
 
+# Windows GUI Application
+PyQt6>=6.6.0
+PyQt6-WebEngine>=6.6.0
+PyQt6-Charts>=6.6.0
+
 # Database (optional)
 sqlalchemy>=2.0.0
+
+# Windows Packaging
+pyinstaller>=6.2.0
+pywin32>=306
 
 # Testing
 pytest>=7.4.0
