@@ -1,0 +1,32 @@
+# AI Music Composer Requirements
+# Python 3.8+
+
+# Deep Learning
+torch>=2.0.0
+numpy>=1.21.0
+
+# MIDI Processing
+midiutil>=1.2.1
+mido>=1.2.10
+python-rtmidi>=1.4.9
+
+# Audio Processing
+scipy>=1.7.0
+pydub>=0.25.1
+
+# Audio Playback
+pygame>=2.1.0
+
+# GUI
+# tkinter comes with Python standard library
+
+# Training & Data
+tqdm>=4.62.0
+
+# Optional: For better audio synthesis
+# fluidsynth (system package)
+# ffmpeg (system package)
+
+# Development
+pytest>=7.0.0
+black>=22.0.0
