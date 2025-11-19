@@ -1,0 +1,82 @@
+# Robot Arm Configuration File
+
+# Robot Parameters
+robot:
+  name: "6DOF Robot Arm"
+  dof: 6
+
+  # Joint limits (radians)
+  joint_limits:
+    min: [-3.14, -3.14, -3.14, -3.14, -3.14, -3.14]
+    max: [3.14, 3.14, 3.14, 3.14, 3.14, 3.14]
+
+  # Velocity limits (rad/s)
+  max_joint_velocities: [3.14, 3.14, 3.14, 3.14, 3.14, 3.14]
+
+  # Acceleration limits (rad/s²)
+  max_joint_accelerations: [6.28, 6.28, 6.28, 6.28, 6.28, 6.28]
+
+  # Link dimensions (for collision checking)
+  link_radii: [0.05, 0.05, 0.05, 0.04, 0.04, 0.03]
+
+# Control Parameters
+control:
+  frequency: 100  # Hz
+  control_mode: "position"  # position, velocity, torque
+
+# Inverse Kinematics
+inverse_kinematics:
+  default_method: "optimization"  # optimization, jacobian, ccd
+  max_iterations: 1000
+  tolerance: 0.0001
+
+# Trajectory Planning
+trajectory:
+  interpolation_type: "cubic_spline"  # linear, cubic_spline, quintic, trapezoidal
+  max_velocity: 1.0  # m/s
+  max_acceleration: 2.0  # m/s²
+  time_step: 0.01  # seconds
+
+# Vision System
+vision:
+  enabled: false
+  camera_id: 0
+  resolution: [1920, 1080]
+  calibration_file: "config/camera_calibration.npz"
+
+  # Object detection
+  detection:
+    method: "color"  # color, contour, blob, template
+    min_area: 500
+
+# Collision Detection
+collision:
+  enabled: true
+  safety_margin: 0.05  # meters
+  check_self_collision: false
+
+# Workspace Limits (meters)
+workspace:
+  x: [-1.0, 1.0]
+  y: [-1.0, 1.0]
+  z: [0.0, 1.5]
+
+# Safety
+safety:
+  emergency_stop: false
+  workspace_limits_enabled: true
+  singularity_avoidance: true
+
+# Visualization
+visualization:
+  enabled: true
+  show_frames: true
+  show_joints: true
+  link_color: "blue"
+  joint_color: "red"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  save_trajectory: false
+  log_file: "logs/robot_arm.log"
