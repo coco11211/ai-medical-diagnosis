@@ -43,6 +43,7 @@ logs/
 
 # Data
 data/
+!src/data/
 *.csv
 *.json
 *.pkl
