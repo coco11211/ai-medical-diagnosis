@@ -1,0 +1,89 @@
+greenhouse:
+  name: Smart Greenhouse
+  location: Zone 1
+  timezone: UTC
+
+sensors:
+  monitoring_interval: 5
+  data_retention_days: 30
+  thresholds:
+    temperature:
+      min: 15
+      max: 30
+      optimal: 22
+    humidity:
+      min: 40
+      max: 80
+      optimal: 60
+    soil_moisture:
+      min: 30
+      max: 70
+      optimal: 50
+    light:
+      min: 10000
+      max: 40000
+      optimal: 25000
+    co2:
+      min: 400
+      max: 1500
+      optimal: 1000
+
+lighting:
+  auto_mode: true
+  target_light_level: 20000
+  photoperiod_hours: 16
+  start_time: '06:00'
+  default_intensity: 100
+  energy_saving_mode: false
+
+irrigation:
+  auto_mode: true
+  moisture_threshold_min: 35
+  moisture_threshold_max: 60
+  default_duration: 60
+  max_daily_water: 50
+  schedule:
+  - time: '07:00'
+    duration: 60
+  - time: '19:00'
+    duration: 45
+
+ml_prediction:
+  enabled: true
+  model_type: random_forest
+  prediction_horizon: 6
+  retrain_interval_days: 7
+  min_training_samples: 100
+
+alerts:
+  enabled: true
+  daily_summary: true
+  daily_summary_time: '20:00'
+  critical_alerts_only: false
+  notification_sound: true
+
+dashboard:
+  host: 127.0.0.1
+  port: 8050
+  auto_refresh_seconds: 5
+  theme: light
+
+plant_settings:
+  plant_type: general
+  planting_date: null
+  expected_harvest_days: 90
+  target_yield_kg: 2.0
+
+automation:
+  full_automation: false
+  override_enabled: true
+  safety_limits:
+    max_temperature: 35
+    min_temperature: 10
+    max_watering_duration: 300
+
+data_storage:
+  data_directory: greenhouse_data
+  model_directory: greenhouse_models
+  backup_enabled: true
+  backup_interval_days: 1
