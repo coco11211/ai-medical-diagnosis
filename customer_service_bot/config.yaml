@@ -1,0 +1,94 @@
+# Customer Service Bot Configuration
+
+# Application Settings
+app:
+  name: "AI Customer Service Bot"
+  version: "1.0.0"
+  default_language: "en"
+  enable_voice: false
+  log_level: "INFO"
+
+# NLP Models
+models:
+  dialogue:
+    name: "microsoft/DialoGPT-medium"
+    max_context_turns: 5
+    temperature: 0.7
+    top_p: 0.9
+    max_length: 150
+
+  sentiment:
+    name: "distilbert-base-uncased-finetuned-sst-2-english"
+    use_ensemble: true
+
+  intent:
+    name: "facebook/bart-large-mnli"
+    confidence_threshold: 0.5
+    use_transformer: true
+
+  entity_extraction:
+    name: "dslim/bert-base-NER"
+    use_spacy: true
+    spacy_model: "en_core_web_sm"
+
+  embeddings:
+    name: "all-MiniLM-L6-v2"
+
+# Escalation Settings
+escalation:
+  enable_auto_escalation: true
+  sentiment_threshold: -0.5
+  urgency_threshold: 7.0
+  unresolved_turns_threshold: 3
+
+# Knowledge Base
+knowledge_base:
+  path: "customer_service_bot/data/knowledge_base.json"
+  min_score_threshold: 0.7
+  max_results: 3
+
+# Voice Settings
+voice:
+  language: "en-US"
+  rate: 150  # words per minute
+  volume: 0.9  # 0.0 to 1.0
+  gender: "female"  # preferred voice gender
+
+# Multi-Language Support
+languages:
+  supported:
+    - en
+    - es
+    - fr
+    - de
+    - it
+    - pt
+    - ja
+    - zh-CN
+    - ko
+  auto_detect: true
+
+# Analytics Dashboard
+analytics:
+  port: 8051
+  update_interval: 5  # seconds
+  retention_hours: 168  # 7 days
+
+# GUI Settings
+gui:
+  width: 1200
+  height: 800
+  theme: "light"  # light or dark
+
+# Session Settings
+session:
+  timeout_minutes: 30
+  max_message_length: 500
+  save_conversations: true
+  export_format: "json"
+
+# Performance
+performance:
+  use_gpu: true
+  batch_size: 1
+  max_workers: 4
