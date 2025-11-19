@@ -1,50 +1,55 @@
-# Trading Bot Simulator Requirements
+# AI News Summarizer Requirements
+# Python 3.8+ required
+
 # Core dependencies
 numpy>=1.24.0
 pandas>=2.0.0
-matplotlib>=3.7.0
-seaborn>=0.12.0
 
-# Technical indicators
-ta-lib>=0.4.28
-pandas-ta>=0.3.14b
-
-# Machine Learning
+# NLP and Text Processing
+nltk>=3.8.1
 scikit-learn>=1.3.0
-tensorflow>=2.13.0
-keras>=2.13.0
 
-# Market data
-yfinance>=0.2.28
-alpha-vantage>=2.3.1
-websocket-client>=1.6.0
+# Transformers for Abstractive Summarization
+transformers>=4.30.0
+torch>=2.0.0
+sentencepiece>=0.1.99
 
-# Portfolio optimization
-PyPortfolioOpt>=1.5.5
-cvxpy>=1.4.0
+# Sentiment Analysis
+vaderSentiment>=3.3.2
 
-# Dashboard and visualization
-plotly>=5.17.0
-dash>=2.14.0
-dash-bootstrap-components>=1.5.0
+# News Fetching
+feedparser>=6.0.10
+requests>=2.31.0
+beautifulsoup4>=4.12.0
 
-# Backtesting
-backtrader>=1.9.78.123
+# Topic Modeling
+gensim>=4.3.0
+
+# Network Analysis (for TextRank)
+networkx>=3.1
+
+# GUI (Windows 11)
+# tkinter comes built-in with Python
 
 # Utilities
 python-dateutil>=2.8.2
 pytz>=2023.3
-pyyaml>=6.0
-requests>=2.31.0
-schedule>=1.2.0
 
-# Notifications
-plyer>=2.1.0
-win10toast>=0.9
+# Export functionality
+# JSON and text export use built-in libraries
+# For advanced PDF export (optional)
+# reportlab>=4.0.0
 
-# Database (optional)
-sqlalchemy>=2.0.0
+# Web scraping (optional)
+lxml>=4.9.0
 
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
+
+# Performance
+tqdm>=4.65.0
+
+# Optional: For NewsAPI integration
+# Get API key from https://newsapi.org
+# No additional package needed (uses requests)

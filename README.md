@@ -1,427 +1,533 @@
-# Autonomous Trading Bot Simulator
+# AI News Summarizer
 
-A comprehensive autonomous trading bot simulator built for Windows 11 with advanced features including multiple trading strategies, backtesting, risk management, paper trading, machine learning predictions, and real-time analytics.
+A comprehensive AI-powered news summarization tool featuring extractive/abstractive summarization, sentiment analysis, and topic clustering capabilities. Optimized for Windows 11 with both GUI and CLI interfaces.
 
-## 🚀 Features
+## Features
 
-### 1. **Multiple Strategy Algorithms**
-- **MACD (Moving Average Convergence Divergence)**: Trend-following momentum indicator
-- **RSI (Relative Strength Index)**: Momentum oscillator for overbought/oversold conditions
-- **Bollinger Bands**: Volatility-based trading strategy
+### 1. **Dual Summarization Methods**
 
-### 2. **Backtesting Engine**
-- Historical data analysis
-- Comprehensive performance metrics
-- Trade-by-trade analysis
-- Multiple timeframe support (1m, 5m, 15m, 1h, 1d)
+#### Extractive Summarization
+- **TF-IDF**: Statistical approach using term frequency-inverse document frequency
+- **TextRank**: Graph-based algorithm inspired by PageRank
+- Fast and efficient, works offline
+- Extracts the most important sentences from the original text
 
-### 3. **Risk Management System**
-- Position sizing based on portfolio percentage
-- Stop-loss and take-profit automation
-- Maximum drawdown protection
-- Risk/reward ratio validation
-- Kelly Criterion position sizing
+#### Abstractive Summarization
+- **BART** (facebook/bart-large-cnn): Powerful transformer model for news
+- **Pegasus**: Specialized for abstractive summarization
+- **T5**: Versatile text-to-text transformer
+- Generates human-like summaries with paraphrasing
+- Supports long document summarization via chunking
 
-### 4. **Paper Trading Mode**
-- Simulated real-time trading
-- Latency simulation
-- Commission and slippage modeling
-- Order management system
+### 2. **Sentiment Analysis**
 
-### 5. **Real-Time Market Data Integration**
-- Yahoo Finance integration
-- Support for stocks, crypto, and forex
-- Real-time price updates
-- Historical data caching
+- **VADER**: Rule-based sentiment analysis optimized for social media and news
+- **Transformer Models**: Deep learning-based sentiment classification
+- Compound sentiment scores with confidence levels
+- Aspect-based sentiment analysis
+- Emotion detection (joy, sadness, anger, fear, surprise)
+- Sentiment trend analysis across multiple articles
 
-### 6. **Portfolio Optimization**
-- Maximum Sharpe Ratio
-- Minimum Volatility
-- Risk Parity
-- Equal Weight
-- Efficient Frontier calculation
+### 3. **Topic Clustering**
 
-### 7. **Machine Learning Price Prediction**
-- LSTM neural networks
-- Random Forest
-- Gradient Boosting
-- Feature engineering
-- Model evaluation metrics
+- **K-Means**: Distance-based clustering with TF-IDF vectors
+- **LDA** (Latent Dirichlet Allocation): Probabilistic topic modeling
+- **NMF** (Non-negative Matrix Factorization): Linear algebra-based topics
+- Automatic optimal cluster detection
+- Topic keyword extraction
+- Article grouping by topic
 
-### 8. **Multi-Asset Support**
-- Stocks (AAPL, MSFT, GOOGL, etc.)
-- Cryptocurrencies (BTC-USD, ETH-USD)
-- Forex pairs (EURUSD=X)
-- Custom watchlists
+### 4. **News Fetching**
 
-### 9. **Performance Analytics Dashboard**
-- Interactive web-based dashboard
-- Real-time portfolio tracking
-- Equity curves and drawdown charts
-- Returns distribution analysis
-- Strategy comparison tools
+- **RSS Feed Support**: Built-in feeds from BBC, CNN, Reuters, TechCrunch, NYT, Guardian, etc.
+- **NewsAPI Integration**: Fetch from 70,000+ sources (requires API key)
+- **Search Functionality**: Search across multiple sources
+- **Trending Topics**: Automatic keyword extraction
+- **Multi-source Aggregation**: Combine news from multiple feeds
 
-### 10. **Alert System**
-- Desktop notifications (Windows 11 compatible)
-- Trade execution alerts
-- Signal generation notifications
-- Risk breach warnings
-- Daily performance summaries
+### 5. **Export Capabilities**
 
-## 📋 Requirements
+- **JSON**: Structured data export
+- **HTML**: Beautiful formatted reports with styling
+- **Markdown**: GitHub-compatible documentation
+- **Plain Text**: Simple text-based reports
+- Batch export of analysis results
+
+### 6. **User Interfaces**
+
+#### GUI (Windows 11 Optimized)
+- Modern, clean interface using tkinter
+- Windows 11 design language
+- Three-tab layout: Fetch, Analyze, Results
+- Real-time progress tracking
+- Multi-threaded operations for smooth UX
+- One-click export functionality
+
+#### CLI
+- Comprehensive command-line interface
+- Pipeline mode for automated workflows
+- Scriptable and automation-friendly
+- Detailed progress output
+
+## System Requirements
 
 - **Operating System**: Windows 11 (also compatible with Windows 10, Linux, macOS)
 - **Python**: 3.8 or higher
-- **RAM**: 4GB minimum (8GB recommended)
-- **Storage**: 500MB free space
+- **RAM**: 4GB minimum (8GB+ recommended for transformers)
+- **Storage**: 2GB free space (for models)
+- **Internet**: Required for fetching news and downloading models
 
-## 🔧 Installation
+## Installation
 
-### Step 1: Clone or Download the Repository
+### Step 1: Clone or Download
 
 ```bash
 git clone <repository-url>
 cd ai-medical-diagnosis
 ```
 
-### Step 2: Install Python Dependencies
+### Step 2: Install Dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
 
-**Note**: Some packages like `ta-lib` may require additional setup on Windows:
-- Download TA-Lib from: https://github.com/mrjbq7/ta-lib#windows
-- Or use pandas-ta as an alternative (already included)
+**Note**: First run will download NLTK data and transformer models automatically.
 
-### Step 3: Configure Settings
+### Step 3: (Optional) Get NewsAPI Key
 
-Edit `config.yaml` to customize:
-- Trading parameters (capital, commission)
-- Risk management settings
-- Strategy parameters
-- Asset watchlists
-- Alert preferences
+For extended news sources:
+1. Visit [https://newsapi.org](https://newsapi.org)
+2. Sign up for free API key
+3. Use with `--api-key` parameter
 
-## 🎯 Quick Start
+## Quick Start
 
-### 1. Run a Backtest
+### GUI Application
 
-Test a strategy on historical data:
+Launch the graphical interface:
 
 ```bash
-python main.py backtest --symbol AAPL --strategy macd
+python news_summarizer.py gui
 ```
 
-**Options**:
-- `--symbol`: Stock symbol (default: AAPL)
-- `--strategy`: macd, rsi, or bollinger
-- `--start-date`: Start date (YYYY-MM-DD)
-- `--end-date`: End date (YYYY-MM-DD)
+**GUI Workflow:**
+1. **Fetch Tab**: Select news sources and fetch articles
+2. **Analyze Tab**: Choose analysis options (summarization, sentiment, clustering)
+3. **Results Tab**: View results and export to various formats
 
-**Example**:
+### CLI Commands
+
+#### 1. Fetch News
+
+Fetch from default sources:
 ```bash
-python main.py backtest --symbol TSLA --strategy rsi --start-date 2023-01-01 --end-date 2024-12-31
+python news_summarizer.py fetch --max-articles 20
 ```
 
-### 2. Compare Strategies
+Fetch from specific sources:
+```bash
+python news_summarizer.py fetch --sources bbc cnn techcrunch --max-articles 10
+```
 
-Compare all strategies on a single asset:
+Export to file:
+```bash
+python news_summarizer.py fetch --output news.json
+```
+
+#### 2. Summarize Text
+
+Extractive summarization:
+```bash
+python news_summarizer.py summarize --text "Your long text here..." --method extractive --sentences 3
+```
+
+Abstractive summarization:
+```bash
+python news_summarizer.py summarize --file article.txt --method abstractive --model facebook/bart-large-cnn
+```
+
+Both methods:
+```bash
+python news_summarizer.py summarize --file article.txt --method both
+```
+
+#### 3. Sentiment Analysis
+
+Analyze sentiment with VADER:
+```bash
+python news_summarizer.py sentiment --text "This is amazing news!" --method vader
+```
+
+Use transformer model:
+```bash
+python news_summarizer.py sentiment --file article.txt --method transformer
+```
+
+#### 4. Topic Clustering
+
+Cluster articles from JSON file:
+```bash
+python news_summarizer.py cluster --file news.json --topics 5 --method lda
+```
+
+Different clustering methods:
+```bash
+python news_summarizer.py cluster --file news.json --method kmeans --topics 3
+```
+
+#### 5. Full Pipeline
+
+Run complete analysis (fetch + summarize + sentiment + cluster + export):
 
 ```bash
-python main.py compare --symbol AAPL
+python news_summarizer.py pipeline --max-articles 30 --output analysis.html
 ```
 
-### 3. Optimize Portfolio
-
-Find optimal portfolio allocation:
-
+Specific sources:
 ```bash
-python main.py optimize --symbols AAPL MSFT GOOGL AMZN --optimize-method max_sharpe
+python news_summarizer.py pipeline --sources bbc reuters techcrunch --output tech_news.html
 ```
 
-**Optimization methods**:
-- `max_sharpe`: Maximum Sharpe ratio
-- `min_volatility`: Minimum volatility
-- `equal_weight`: Equal allocation
-- `risk_parity`: Risk parity allocation
+## Available News Sources
 
-### 4. Train ML Model
+Default RSS feeds included:
+- **bbc**: BBC News
+- **cnn**: CNN Top Stories
+- **reuters**: Reuters Top News
+- **techcrunch**: TechCrunch
+- **ars_technica**: Ars Technica
+- **hacker_news**: Hacker News
+- **nyt**: New York Times
+- **guardian**: The Guardian
 
-Train a machine learning model for price prediction:
+## Configuration Options
 
-```bash
-python main.py ml --symbol AAPL
-```
+### Summarization Parameters
 
-The model will:
-- Train on historical data
-- Evaluate performance
-- Generate price predictions
-- Display accuracy metrics
+**Extractive:**
+- `--sentences`: Number of sentences (default: 3)
+- `--algorithm`: tfidf or textrank (default: textrank)
 
-### 5. Paper Trading
+**Abstractive:**
+- `--model`: Transformer model (default: facebook/bart-large-cnn)
+- `--max-length`: Maximum summary length (default: 130)
+- `--min-length`: Minimum summary length (default: 30)
 
-Simulate live trading without real money:
+**Available Models:**
+- `facebook/bart-large-cnn` (Best for news, balanced)
+- `google/pegasus-xsum` (Shorter summaries)
+- `google/pegasus-cnn_dailymail` (News-focused)
+- `t5-base` (Versatile, lighter)
 
-```bash
-python main.py paper --symbol AAPL --strategy macd
-```
+### Sentiment Analysis
 
-**Multi-asset trading**:
-```bash
-python main.py paper --symbols AAPL MSFT GOOGL --strategy bollinger
-```
+**Methods:**
+- `vader`: Fast, rule-based (offline)
+- `transformer`: Deep learning-based (requires model download)
+- `both`: Run both methods
 
-Press `Ctrl+C` to stop trading and view summary.
+### Topic Clustering
 
-### 6. Launch Dashboard
+**Methods:**
+- `lda`: Latent Dirichlet Allocation (best for topics)
+- `kmeans`: K-Means clustering (fast)
+- `nmf`: Non-negative Matrix Factorization (interpretable)
 
-View analytics in your web browser:
+**Parameters:**
+- `--topics`: Number of topics/clusters (default: 5)
 
-```bash
-python main.py dashboard
-```
-
-Open your browser to: http://127.0.0.1:8050
-
-## 📊 Configuration
-
-### Trading Parameters
-
-```yaml
-trading:
-  initial_capital: 100000.0
-  commission: 0.001  # 0.1%
-  slippage: 0.0005   # 0.05%
-```
-
-### Risk Management
-
-```yaml
-risk_management:
-  max_position_size: 0.2  # 20% per position
-  max_portfolio_risk: 0.02  # 2% max loss per trade
-  stop_loss_percent: 0.05  # 5% stop loss
-  take_profit_percent: 0.15  # 15% take profit
-  max_drawdown: 0.20  # 20% max drawdown
-```
-
-### Strategy Parameters
-
-```yaml
-strategies:
-  macd:
-    fast_period: 12
-    slow_period: 26
-    signal_period: 9
-
-  rsi:
-    period: 14
-    oversold: 30
-    overbought: 70
-
-  bollinger:
-    period: 20
-    std_dev: 2
-```
-
-## 📁 Project Structure
+## Project Structure
 
 ```
-trading-bot-simulator/
+ai-news-summarizer/
 ├── src/
-│   ├── config/           # Configuration management
-│   ├── data/             # Data fetching and processing
-│   ├── strategies/       # Trading strategies
-│   ├── backtesting/      # Backtesting engine
-│   ├── risk_management/  # Risk management system
-│   ├── paper_trading/    # Paper trading simulator
-│   ├── portfolio/        # Portfolio optimization
-│   ├── ml/               # Machine learning models
-│   ├── analytics/        # Dashboard and analytics
-│   ├── alerts/           # Alert system
-│   └── engine/           # Main trading engine
-├── config.yaml           # Configuration file
-├── requirements.txt      # Python dependencies
-├── main.py              # Main entry point
-└── README.md            # This file
+│   └── news_summarizer/
+│       ├── __init__.py
+│       ├── summarization/
+│       │   ├── extractive.py      # TF-IDF & TextRank
+│       │   └── abstractive.py     # Transformer models
+│       ├── sentiment/
+│       │   └── analyzer.py        # VADER & transformers
+│       ├── clustering/
+│       │   └── topic_clustering.py # K-Means, LDA, NMF
+│       ├── fetcher/
+│       │   └── news_fetcher.py    # RSS & NewsAPI
+│       ├── gui/
+│       │   └── main_window.py     # Windows 11 GUI
+│       └── utils/
+│           ├── text_processor.py  # Text utilities
+│           └── export.py          # Export manager
+├── news_summarizer.py             # Main CLI interface
+├── requirements.txt               # Python dependencies
+└── README.md                      # This file
 ```
 
-## 🎓 Usage Examples
+## Usage Examples
 
-### Example 1: Complete Backtest Analysis
+### Example 1: Quick News Summary
 
 ```bash
-# Run backtest
-python main.py backtest --symbol AAPL --strategy macd
+# Fetch and summarize tech news
+python news_summarizer.py pipeline --sources techcrunch ars_technica --max-articles 10 --output tech_summary.html
 
-# Compare all strategies
-python main.py compare --symbol AAPL
-
-# Optimize for best strategy parameters
-python main.py optimize --symbols AAPL MSFT GOOGL
+# Open tech_summary.html in browser to view beautiful formatted report
 ```
 
-### Example 2: ML-Enhanced Trading
+### Example 2: Sentiment Analysis of Articles
 
 ```bash
-# Train ML model
-python main.py ml --symbol AAPL
+# Fetch news
+python news_summarizer.py fetch --sources cnn bbc --output news.json
 
-# Run backtest with optimized portfolio
-python main.py optimize --symbols AAPL MSFT GOOGL --optimize-method max_sharpe
-
-# Start paper trading
-python main.py paper --symbols AAPL MSFT GOOGL --strategy macd
+# Analyze sentiment
+python news_summarizer.py sentiment --file news.json --method both --output sentiment.json
 ```
 
-### Example 3: Real-Time Monitoring
+### Example 3: Topic Discovery
 
 ```bash
-# Start paper trading in one terminal
-python main.py paper --symbol AAPL --strategy rsi
+# Fetch diverse news
+python news_summarizer.py fetch --sources bbc cnn reuters guardian nyt --max-articles 50 --output diverse_news.json
 
-# Launch dashboard in another terminal
-python main.py dashboard
+# Discover topics
+python news_summarizer.py cluster --file diverse_news.json --topics 10 --method lda --output topics.json
 ```
 
-## 📈 Performance Metrics
+### Example 4: Custom Text Summarization
 
-The bot calculates comprehensive metrics:
+```bash
+# Create a text file with your content
+echo "Your long article text here..." > article.txt
 
-- **Returns**: Total, annualized, cumulative
-- **Risk**: Volatility, max drawdown, Value at Risk
-- **Ratios**: Sharpe ratio, risk/reward ratio
-- **Trading**: Win rate, profit factor, trade distribution
-- **ML**: R², RMSE, MAE, MAPE
+# Get both extractive and abstractive summaries
+python news_summarizer.py summarize --file article.txt --method both --sentences 5
+```
 
-## 🔔 Alert System
+## Performance Tips
 
-Alerts are sent for:
-- Trade executions
-- Trading signals
-- Risk breaches
-- System errors
-- Daily summaries
+### For Faster Processing:
+- Use **extractive** summarization instead of abstractive
+- Use **VADER** sentiment analysis instead of transformers
+- Limit `--max-articles` to reasonable numbers (20-50)
+- Use lighter models like `t5-small` for abstractive summarization
 
-On Windows 11, desktop notifications appear as native toast notifications.
+### For Better Quality:
+- Use **abstractive** summarization with `facebook/bart-large-cnn`
+- Use **both** sentiment methods for more accurate analysis
+- Increase `--topics` for finer-grained clustering
+- Use **LDA** for topic modeling (better topics than K-Means)
 
-## 🛡️ Risk Management Features
+### For Low Memory Systems:
+- Avoid loading transformer models
+- Stick with extractive + VADER + K-Means
+- Process in smaller batches
+- Use `t5-small` if you need abstractive summarization
 
-- **Position Sizing**: Automatic calculation based on risk parameters
-- **Stop Loss**: Automatic stop-loss orders
-- **Take Profit**: Automatic take-profit targets
-- **Drawdown Protection**: Trading stops if max drawdown exceeded
-- **Portfolio Limits**: Maximum position sizes enforced
+## Output Formats
 
-## 🤖 Machine Learning Models
+### JSON Export
+Structured data with all analysis results, perfect for further processing.
 
-### Supported Models:
-1. **LSTM**: Long Short-Term Memory neural networks
-2. **Random Forest**: Ensemble learning method
-3. **Gradient Boosting**: Boosted decision trees
+### HTML Export
+Beautiful, styled report with:
+- Color-coded sentiment indicators
+- Organized article summaries
+- Topic tags
+- Responsive design
+- Direct links to original articles
 
-### Features Used:
-- Price data (OHLCV)
-- Technical indicators
-- Moving averages
-- Volatility measures
-- Volume indicators
-- Lagged features
+### Markdown Export
+GitHub-compatible markdown with:
+- Hierarchical structure
+- Formatted tables
+- Easy to read and edit
+- Version control friendly
 
-## 📊 Dashboard Features
+### Plain Text Export
+Simple, clean text output for:
+- Email reports
+- Terminal viewing
+- Legacy systems
 
-The web dashboard includes:
-- Real-time portfolio value
-- Equity curve visualization
-- Drawdown chart
-- Returns distribution
-- Trade analysis
-- Strategy comparison
-- Technical indicators chart
-- Price predictions
-
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Issue: "Module not found" error
-
-**Solution**: Install all dependencies
+**Solution**: Install dependencies
 ```bash
 pip install -r requirements.txt
 ```
 
-### Issue: TA-Lib installation fails
+### Issue: Transformer model download fails
+**Solution**: Check internet connection or use extractive mode
+```bash
+python news_summarizer.py summarize --file text.txt --method extractive
+```
 
-**Solution**: Use pandas-ta (already included) or install precompiled TA-Lib for Windows
+### Issue: Out of memory when using transformers
+**Solution**: Use lighter models or extractive summarization
+```bash
+# Use lighter model
+python news_summarizer.py summarize --file text.txt --method abstractive --model t5-small
 
-### Issue: No data fetched
+# Or use extractive
+python news_summarizer.py summarize --file text.txt --method extractive
+```
 
+### Issue: RSS feed timeout
 **Solution**:
 - Check internet connection
-- Verify symbol is correct
-- Try different date range
-- Check if market is open for real-time data
+- Try fewer sources
+- Increase timeout in code if needed
 
-### Issue: Dashboard doesn't open
+### Issue: GUI doesn't launch
+**Solution**: Ensure tkinter is installed (comes with Python on Windows)
+```bash
+python -m tkinter  # Test tkinter installation
+```
 
-**Solution**:
-- Check port 8050 is not in use
-- Try different port in config.yaml
-- Ensure dash packages are installed
+## Advanced Usage
 
-## 🔮 Future Enhancements
+### Using NewsAPI
 
-- Live trading with broker API integration
-- More technical indicators
-- Advanced ML models (Transformers, Reinforcement Learning)
-- Multi-timeframe analysis
-- News sentiment analysis
-- Social media sentiment integration
-- Automated strategy optimization
-- Cloud deployment support
+```python
+from news_summarizer import NewsFetcher
 
-## ⚠️ Disclaimer
+fetcher = NewsFetcher()
+result = fetcher.fetch_newsapi(
+    api_key='YOUR_API_KEY',
+    query='artificial intelligence',
+    language='en',
+    page_size=50
+)
+```
 
-**This is a simulator for educational and testing purposes only.**
+### Custom Pipelines
 
-- Past performance does not guarantee future results
-- Trading involves risk of financial loss
-- Always do your own research before trading
-- Start with paper trading before risking real money
-- The authors are not responsible for any financial losses
+```python
+from news_summarizer import (
+    ExtractiveSummarizer,
+    SentimentAnalyzer,
+    NewsFetcher
+)
 
-## 📝 License
+# Fetch news
+fetcher = NewsFetcher()
+articles = fetcher.fetch_default_feeds()
 
-This project is for educational purposes. Use at your own risk.
+# Analyze each article
+summarizer = ExtractiveSummarizer()
+analyzer = SentimentAnalyzer()
 
-## 🤝 Contributing
+for article in articles['articles']:
+    text = f"{article['title']} {article['description']}"
 
-Contributions are welcome! Please:
+    # Summarize
+    summary = summarizer.summarize(text)
+
+    # Sentiment
+    sentiment = analyzer.analyze(text)
+
+    print(f"Title: {article['title']}")
+    print(f"Summary: {summary['summary']}")
+    print(f"Sentiment: {sentiment['sentiment']}")
+    print("-" * 80)
+```
+
+### Batch Processing
+
+```python
+from news_summarizer import AbstractiveSummarizer
+
+summarizer = AbstractiveSummarizer()
+
+texts = ["Article 1 text...", "Article 2 text...", "Article 3 text..."]
+summaries = summarizer.batch_summarize(texts)
+
+for i, summary in enumerate(summaries):
+    print(f"Summary {i+1}: {summary['summary']}")
+```
+
+## API Reference
+
+### ExtractiveSummarizer
+- `summarize(text, method='textrank', num_sentences=3)`: Summarize text
+- `tfidf_summarize(text, num_sentences=3)`: TF-IDF based summary
+- `textrank_summarize(text, num_sentences=3)`: TextRank summary
+- `get_key_sentences(text, top_k=5)`: Extract key sentences with scores
+
+### AbstractiveSummarizer
+- `summarize(text, max_length=130, min_length=30)`: Generate summary
+- `summarize_long_text(text, chunk_size=1024)`: Handle long documents
+- `batch_summarize(texts)`: Summarize multiple texts
+- `unload_model()`: Free memory
+
+### SentimentAnalyzer
+- `analyze(text, method='vader')`: Analyze sentiment
+- `analyze_vader(text)`: VADER analysis
+- `analyze_transformer(text)`: Transformer analysis
+- `get_aspect_sentiment(text, aspects)`: Aspect-based analysis
+- `analyze_sentiment_trend(texts)`: Trend analysis
+
+### TopicClusterer
+- `kmeans_cluster(texts, n_clusters=5)`: K-Means clustering
+- `lda_topics(texts, n_topics=5)`: LDA topic modeling
+- `nmf_topics(texts, n_topics=5)`: NMF topic modeling
+- `find_optimal_clusters(texts)`: Find optimal cluster count
+
+### NewsFetcher
+- `fetch_rss(feed_url)`: Fetch from RSS feed
+- `fetch_default_feeds()`: Fetch from all default feeds
+- `fetch_newsapi(api_key, query)`: Fetch from NewsAPI
+- `search_news(query, sources)`: Search across sources
+- `get_trending_topics(articles)`: Extract trending topics
+
+## Contributing
+
+Contributions welcome! Please:
 1. Fork the repository
 2. Create a feature branch
 3. Make your changes
-4. Submit a pull request
+4. Add tests if applicable
+5. Submit a pull request
 
-## 📧 Support
+## License
+
+This project is for educational and research purposes.
+
+## Acknowledgments
+
+Built with:
+- **Python** - Core language
+- **NLTK** - Natural language processing
+- **scikit-learn** - Machine learning algorithms
+- **Transformers** (Hugging Face) - State-of-the-art NLP models
+- **NetworkX** - Graph algorithms for TextRank
+- **feedparser** - RSS feed parsing
+- **tkinter** - GUI framework
+
+Special thanks to:
+- Hugging Face for pre-trained models
+- NLTK project for language resources
+- News outlets for RSS feeds
+
+## Support
 
 For issues, questions, or suggestions:
 - Open an issue on GitHub
 - Check the troubleshooting section
-- Review the configuration options
+- Review the API reference
 
-## 🎉 Acknowledgments
+## Citation
 
-Built with:
-- Python
-- pandas, numpy, scikit-learn
-- TensorFlow/Keras
-- yfinance
-- Plotly & Dash
-- And many other open-source libraries
+If you use this tool in research, please cite:
+```
+AI News Summarizer - A comprehensive news analysis tool with extractive/abstractive
+summarization, sentiment analysis, and topic clustering.
+```
 
 ---
 
-**Happy Trading! 📈🚀**
+**Happy News Summarizing!**
 
-Remember: Always test strategies thoroughly with backtesting and paper trading before considering real trading.
+*Stay informed with AI-powered insights.*
