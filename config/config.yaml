@@ -1,0 +1,37 @@
+# AI Medical Diagnosis System Configuration
+
+model:
+  resnet_weights: "ResNet50_Weights.IMAGENET1K_V2"
+  efficientnet_version: "efficientnet-b4"
+  num_classes: 10
+  input_size: [224, 224]
+  batch_size: 32
+  learning_rate: 0.001
+
+dicom:
+  window_center: 40
+  window_width: 400
+  target_size: [512, 512]
+  normalize: true
+
+nlp:
+  model_name: "dmis-lab/biobert-base-cased-v1.2"
+  max_length: 512
+  embedding_dim: 768
+
+database:
+  type: "sqlite"
+  host: "localhost"
+  port: 5432
+  database: "medical_diagnosis.db"
+  username: ""
+  password: ""
+
+api:
+  host: "0.0.0.0"
+  port: 8000
+  workers: 4
+  reload: false
+
+log_level: "INFO"
+device: "cuda"  # or "cpu" for Windows 11 without CUDA
