@@ -1,83 +1,58 @@
-# Autonomous Trading Bot Simulator
+# Robotic Vacuum Mapper
 
-A comprehensive autonomous trading bot simulator built for Windows 11 with advanced features including multiple trading strategies, backtesting, risk management, paper trading, machine learning predictions, and real-time analytics.
+A comprehensive SLAM-based robotic vacuum cleaner simulation system for Windows 11 with autonomous mapping, obstacle detection, and intelligent coverage path planning.
 
-## 🚀 Features
+## Features
 
-### 1. **Multiple Strategy Algorithms**
-- **MACD (Moving Average Convergence Divergence)**: Trend-following momentum indicator
-- **RSI (Relative Strength Index)**: Momentum oscillator for overbought/oversold conditions
-- **Bollinger Bands**: Volatility-based trading strategy
+### 1. **SLAM (Simultaneous Localization and Mapping)**
+- **Grid-Based Mapping**: Occupancy grid mapping with probabilistic updates
+- **Particle Filter Localization**: Monte Carlo Localization (MCL) for accurate pose estimation
+- **Real-Time Map Building**: Dynamic map updates as the robot explores
+- **Trajectory Tracking**: Complete history of robot movements
 
-### 2. **Backtesting Engine**
-- Historical data analysis
-- Comprehensive performance metrics
-- Trade-by-trade analysis
-- Multiple timeframe support (1m, 5m, 15m, 1h, 1d)
+### 2. **Obstacle Detection and Mapping**
+- **LiDAR Simulation**: 360-degree laser scanning for precise obstacle detection
+- **Ultrasonic Sensors**: Short-range collision avoidance with 8-sensor array
+- **Bresenham Ray Tracing**: Efficient line-of-sight calculations
+- **Multi-Sensor Fusion**: Combined sensor data for robust mapping
 
-### 3. **Risk Management System**
-- Position sizing based on portfolio percentage
-- Stop-loss and take-profit automation
-- Maximum drawdown protection
-- Risk/reward ratio validation
-- Kelly Criterion position sizing
+### 3. **Coverage Path Planning**
+- **Boustrophedon (Lawn Mower)**: Back-and-forth pattern for efficient room coverage
+- **Spiral Coverage**: Inward/outward spiral patterns for specific layouts
+- **Path Optimization**: Automatic waypoint reduction and smoothing
+- **Coverage Metrics**: Real-time coverage percentage calculation
 
-### 4. **Paper Trading Mode**
-- Simulated real-time trading
-- Latency simulation
-- Commission and slippage modeling
-- Order management system
+### 4. **Advanced Visualization**
+- **Real-Time Mapping**: Live visualization during exploration
+- **Interactive Display**: Matplotlib-based visualization for Windows 11
+- **Multi-View Analysis**: Side-by-side algorithm comparison
+- **Sensor Visualization**: Display LiDAR beams and detection points
+- **High-DPI Support**: Optimized for Windows 11 high-resolution displays
 
-### 5. **Real-Time Market Data Integration**
-- Yahoo Finance integration
-- Support for stocks, crypto, and forex
-- Real-time price updates
-- Historical data caching
+### 5. **Environment Simulation**
+- **Empty Room**: Basic rectangular room for testing
+- **Furniture Layout**: Rooms with randomized obstacles
+- **L-Shaped Rooms**: Complex multi-section layouts
+- **Maze Environments**: Dense obstacle courses
+- **Multi-Room Layouts**: Connected rooms with doorways
 
-### 6. **Portfolio Optimization**
-- Maximum Sharpe Ratio
-- Minimum Volatility
-- Risk Parity
-- Equal Weight
-- Efficient Frontier calculation
+### 6. **Particle Filter Localization**
+- **1000+ Particles**: High-accuracy position estimation
+- **Motion Prediction**: Odometry-based particle movement
+- **Sensor Updates**: Likelihood-based weight adjustment
+- **Resampling**: Low-variance resampling for efficiency
 
-### 7. **Machine Learning Price Prediction**
-- LSTM neural networks
-- Random Forest
-- Gradient Boosting
-- Feature engineering
-- Model evaluation metrics
-
-### 8. **Multi-Asset Support**
-- Stocks (AAPL, MSFT, GOOGL, etc.)
-- Cryptocurrencies (BTC-USD, ETH-USD)
-- Forex pairs (EURUSD=X)
-- Custom watchlists
-
-### 9. **Performance Analytics Dashboard**
-- Interactive web-based dashboard
-- Real-time portfolio tracking
-- Equity curves and drawdown charts
-- Returns distribution analysis
-- Strategy comparison tools
-
-### 10. **Alert System**
-- Desktop notifications (Windows 11 compatible)
-- Trade execution alerts
-- Signal generation notifications
-- Risk breach warnings
-- Daily performance summaries
-
-## 📋 Requirements
+## System Requirements
 
 - **Operating System**: Windows 11 (also compatible with Windows 10, Linux, macOS)
 - **Python**: 3.8 or higher
-- **RAM**: 4GB minimum (8GB recommended)
-- **Storage**: 500MB free space
+- **RAM**: 4GB minimum (8GB recommended for larger maps)
+- **Storage**: 200MB free space
+- **Display**: 1920x1080 or higher recommended
 
-## 🔧 Installation
+## Installation
 
-### Step 1: Clone or Download the Repository
+### Step 1: Clone the Repository
 
 ```bash
 git clone <repository-url>
@@ -90,338 +65,409 @@ cd ai-medical-diagnosis
 pip install -r requirements.txt
 ```
 
-**Note**: Some packages like `ta-lib` may require additional setup on Windows:
-- Download TA-Lib from: https://github.com/mrjbq7/ta-lib#windows
-- Or use pandas-ta as an alternative (already included)
+**Required packages:**
+- numpy >= 1.24.0
+- matplotlib >= 3.7.0
+- scipy >= 1.11.0
 
-### Step 3: Configure Settings
-
-Edit `config.yaml` to customize:
-- Trading parameters (capital, commission)
-- Risk management settings
-- Strategy parameters
-- Asset watchlists
-- Alert preferences
-
-## 🎯 Quick Start
-
-### 1. Run a Backtest
-
-Test a strategy on historical data:
+### Step 3: Verify Installation
 
 ```bash
-python main.py backtest --symbol AAPL --strategy macd
+python vacuum_mapper.py --help
 ```
 
-**Options**:
-- `--symbol`: Stock symbol (default: AAPL)
-- `--strategy`: macd, rsi, or bollinger
-- `--start-date`: Start date (YYYY-MM-DD)
-- `--end-date`: End date (YYYY-MM-DD)
+## Quick Start
 
-**Example**:
-```bash
-python main.py backtest --symbol TSLA --strategy rsi --start-date 2023-01-01 --end-date 2024-12-31
-```
+### 1. Basic Room Mapping
 
-### 2. Compare Strategies
-
-Compare all strategies on a single asset:
+Map a simple room with furniture:
 
 ```bash
-python main.py compare --symbol AAPL
+python vacuum_mapper.py --environment furniture --steps 500
 ```
 
-### 3. Optimize Portfolio
+### 2. Complex Environment
 
-Find optimal portfolio allocation:
+Map an L-shaped room:
 
 ```bash
-python main.py optimize --symbols AAPL MSFT GOOGL AMZN --optimize-method max_sharpe
+python vacuum_mapper.py --environment l_shape --steps 800
 ```
 
-**Optimization methods**:
-- `max_sharpe`: Maximum Sharpe ratio
-- `min_volatility`: Minimum volatility
-- `equal_weight`: Equal allocation
-- `risk_parity`: Risk parity allocation
+### 3. Coverage Planning Algorithms
 
-### 4. Train ML Model
-
-Train a machine learning model for price prediction:
+#### Boustrophedon (Lawn Mower) Pattern
 
 ```bash
-python main.py ml --symbol AAPL
+python vacuum_mapper.py --environment furniture --algorithm boustrophedon
 ```
 
-The model will:
-- Train on historical data
-- Evaluate performance
-- Generate price predictions
-- Display accuracy metrics
-
-### 5. Paper Trading
-
-Simulate live trading without real money:
+#### Spiral Pattern
 
 ```bash
-python main.py paper --symbol AAPL --strategy macd
+python vacuum_mapper.py --environment empty --algorithm spiral
 ```
 
-**Multi-asset trading**:
-```bash
-python main.py paper --symbols AAPL MSFT GOOGL --strategy bollinger
-```
-
-Press `Ctrl+C` to stop trading and view summary.
-
-### 6. Launch Dashboard
-
-View analytics in your web browser:
+#### Compare Algorithms
 
 ```bash
-python main.py dashboard
+python vacuum_mapper.py --environment furniture --algorithm compare
 ```
 
-Open your browser to: http://127.0.0.1:8050
+### 4. Maze Navigation
 
-## 📊 Configuration
+```bash
+python vacuum_mapper.py --environment maze --steps 1000
+```
 
-### Trading Parameters
+### 5. Multi-Room Mapping
+
+```bash
+python vacuum_mapper.py --environment multi_room --steps 1500
+```
+
+## Command Line Options
+
+```bash
+python vacuum_mapper.py [OPTIONS]
+```
+
+### Available Options
+
+| Option | Type | Default | Description |
+|--------|------|---------|-------------|
+| `--environment` | str | furniture | Environment type (empty, furniture, l_shape, maze, multi_room) |
+| `--algorithm` | str | boustrophedon | Coverage algorithm (boustrophedon, spiral, compare) |
+| `--steps` | int | 500 | Number of exploration steps |
+| `--no-visualize` | flag | False | Disable real-time visualization |
+| `--save` | str | None | Path to save result visualization |
+| `--grid-size` | int | 200 | Grid size (creates square grid) |
+
+### Examples
+
+**Explore empty room and save results:**
+```bash
+python vacuum_mapper.py --environment empty --steps 400 --save results/empty_room.png
+```
+
+**Large grid with no visualization (faster):**
+```bash
+python vacuum_mapper.py --grid-size 300 --steps 1000 --no-visualize
+```
+
+**Quick test with small grid:**
+```bash
+python vacuum_mapper.py --grid-size 100 --steps 200
+```
+
+## Configuration
+
+Edit `vacuum_config.yaml` to customize behavior:
+
+### Robot Parameters
 
 ```yaml
-trading:
-  initial_capital: 100000.0
-  commission: 0.001  # 0.1%
-  slippage: 0.0005   # 0.05%
+robot:
+  width: 0.3              # Robot width in meters
+  max_speed: 0.3          # Maximum speed
+  angular_speed: 1.0      # Turn rate
 ```
 
-### Risk Management
+### SLAM Settings
 
 ```yaml
-risk_management:
-  max_position_size: 0.2  # 20% per position
-  max_portfolio_risk: 0.02  # 2% max loss per trade
-  stop_loss_percent: 0.05  # 5% stop loss
-  take_profit_percent: 0.15  # 15% take profit
-  max_drawdown: 0.20  # 20% max drawdown
+slam:
+  grid_size: [200, 200]   # Map dimensions
+  resolution: 0.05        # 5cm per cell
 ```
 
-### Strategy Parameters
+### Sensor Configuration
 
 ```yaml
-strategies:
-  macd:
-    fast_period: 12
-    slow_period: 26
-    signal_period: 9
+lidar:
+  num_beams: 360          # Full circle scanning
+  max_range: 5.0          # 5 meter range
+  noise_std: 0.02         # 2cm noise
 
-  rsi:
-    period: 14
-    oversold: 30
-    overbought: 70
-
-  bollinger:
-    period: 20
-    std_dev: 2
+ultrasonic:
+  num_sensors: 8          # 8 sensors around robot
+  max_range: 0.5          # 50cm range
 ```
 
-## 📁 Project Structure
+### Coverage Planning
 
-```
-trading-bot-simulator/
-├── src/
-│   ├── config/           # Configuration management
-│   ├── data/             # Data fetching and processing
-│   ├── strategies/       # Trading strategies
-│   ├── backtesting/      # Backtesting engine
-│   ├── risk_management/  # Risk management system
-│   ├── paper_trading/    # Paper trading simulator
-│   ├── portfolio/        # Portfolio optimization
-│   ├── ml/               # Machine learning models
-│   ├── analytics/        # Dashboard and analytics
-│   ├── alerts/           # Alert system
-│   └── engine/           # Main trading engine
-├── config.yaml           # Configuration file
-├── requirements.txt      # Python dependencies
-├── main.py              # Main entry point
-└── README.md            # This file
+```yaml
+coverage:
+  algorithm: 'boustrophedon'
+  overlap: 0.05           # 5cm overlap between passes
+  direction: 'horizontal' # Sweep direction
 ```
 
-## 🎓 Usage Examples
+## Project Structure
 
-### Example 1: Complete Backtest Analysis
-
-```bash
-# Run backtest
-python main.py backtest --symbol AAPL --strategy macd
-
-# Compare all strategies
-python main.py compare --symbol AAPL
-
-# Optimize for best strategy parameters
-python main.py optimize --symbols AAPL MSFT GOOGL
+```
+ai-medical-diagnosis/
+├── vacuum_mapper/
+│   ├── slam/
+│   │   ├── grid_slam.py         # Grid-based SLAM implementation
+│   │   └── particle_filter.py   # Particle filter localization
+│   ├── sensors/
+│   │   ├── lidar.py             # LiDAR sensor simulation
+│   │   └── ultrasonic.py        # Ultrasonic sensor array
+│   ├── coverage/
+│   │   ├── boustrophedon.py     # Lawn mower coverage
+│   │   └── spiral.py            # Spiral coverage
+│   ├── visualization/
+│   │   ├── mapper_viz.py        # Static visualization
+│   │   └── real_time_viz.py     # Real-time display
+│   └── utils/
+│       ├── environment.py       # Environment simulation
+│       └── logger.py            # Logging utilities
+├── vacuum_mapper.py             # Main entry point
+├── vacuum_config.yaml           # Configuration file
+├── requirements.txt             # Python dependencies
+└── README.md                    # This file
 ```
 
-### Example 2: ML-Enhanced Trading
+## SLAM Algorithm Details
 
-```bash
-# Train ML model
-python main.py ml --symbol AAPL
+### Grid-Based Mapping
 
-# Run backtest with optimized portfolio
-python main.py optimize --symbols AAPL MSFT GOOGL --optimize-method max_sharpe
+The system uses occupancy grid mapping where each cell represents:
 
-# Start paper trading
-python main.py paper --symbols AAPL MSFT GOOGL --strategy macd
-```
+- **0-49**: Free space (lower = more certain)
+- **50**: Unknown/unexplored
+- **100-199**: Occupied space (higher = more certain)
 
-### Example 3: Real-Time Monitoring
+### Particle Filter
 
-```bash
-# Start paper trading in one terminal
-python main.py paper --symbol AAPL --strategy rsi
+Monte Carlo Localization with:
+- **1000 particles** for pose estimation
+- **Prediction step**: Motion model with noise
+- **Update step**: Sensor likelihood calculation
+- **Resampling**: Low-variance resampling when needed
 
-# Launch dashboard in another terminal
-python main.py dashboard
-```
+### Sensor Fusion
 
-## 📈 Performance Metrics
+- **LiDAR**: Long-range (5m) obstacle detection, 360 beams
+- **Ultrasonic**: Short-range (0.5m) collision avoidance, 8 sensors
+- **Ray Tracing**: Bresenham's algorithm for efficient computation
 
-The bot calculates comprehensive metrics:
+## Coverage Planning Algorithms
 
-- **Returns**: Total, annualized, cumulative
-- **Risk**: Volatility, max drawdown, Value at Risk
-- **Ratios**: Sharpe ratio, risk/reward ratio
-- **Trading**: Win rate, profit factor, trade distribution
-- **ML**: R², RMSE, MAE, MAPE
+### Boustrophedon (Lawn Mower)
 
-## 🔔 Alert System
+**Advantages:**
+- Systematic complete coverage
+- Predictable path length
+- Optimal for rectangular rooms
 
-Alerts are sent for:
-- Trade executions
-- Trading signals
-- Risk breaches
-- System errors
-- Daily summaries
+**How it works:**
+1. Divide space into parallel stripes
+2. Sweep back and forth
+3. Handle obstacles by splitting regions
 
-On Windows 11, desktop notifications appear as native toast notifications.
+### Spiral Coverage
 
-## 🛡️ Risk Management Features
+**Advantages:**
+- Natural starting from center or edge
+- Good for circular/irregular spaces
+- Minimal turns in open areas
 
-- **Position Sizing**: Automatic calculation based on risk parameters
-- **Stop Loss**: Automatic stop-loss orders
-- **Take Profit**: Automatic take-profit targets
-- **Drawdown Protection**: Trading stops if max drawdown exceeded
-- **Portfolio Limits**: Maximum position sizes enforced
+**How it works:**
+1. Start from initial position
+2. Spiral outward (or inward)
+3. Avoid obstacles dynamically
 
-## 🤖 Machine Learning Models
+## Performance Metrics
 
-### Supported Models:
-1. **LSTM**: Long Short-Term Memory neural networks
-2. **Random Forest**: Ensemble learning method
-3. **Gradient Boosting**: Boosted decision trees
+The system calculates:
 
-### Features Used:
-- Price data (OHLCV)
-- Technical indicators
-- Moving averages
-- Volatility measures
-- Volume indicators
-- Lagged features
+- **Exploration Percentage**: Ratio of explored to total free space
+- **Coverage Percentage**: Ratio of planned coverage to free space
+- **Path Length**: Total waypoints in coverage path
+- **Path Optimization**: Waypoint reduction ratio
 
-## 📊 Dashboard Features
+## Visualization Features
 
-The web dashboard includes:
-- Real-time portfolio value
-- Equity curve visualization
-- Drawdown chart
-- Returns distribution
-- Trade analysis
-- Strategy comparison
-- Technical indicators chart
-- Price predictions
+### Real-Time Display
 
-## 🐛 Troubleshooting
+- **Map Building**: See SLAM map grow as robot explores
+- **Robot Position**: Live position and orientation
+- **Trajectory**: Historical path visualization
+- **Sensor Beams**: LiDAR/ultrasonic visualization
 
-### Issue: "Module not found" error
+### Static Results
 
-**Solution**: Install all dependencies
+- **Occupancy Grid**: Final mapped environment
+- **Coverage Path**: Planned cleaning path
+- **Algorithm Comparison**: Side-by-side analysis
+
+## Troubleshooting
+
+### Issue: "ModuleNotFoundError"
+
+**Solution:**
 ```bash
 pip install -r requirements.txt
 ```
 
-### Issue: TA-Lib installation fails
+### Issue: Visualization window doesn't appear
 
-**Solution**: Use pandas-ta (already included) or install precompiled TA-Lib for Windows
+**Solution:**
+- Check if matplotlib backend is properly configured
+- Try: `python -c "import matplotlib; matplotlib.use('TkAgg')"`
+- On Windows 11, ensure graphics drivers are updated
 
-### Issue: No data fetched
+### Issue: "Memory Error" with large grids
 
-**Solution**:
-- Check internet connection
-- Verify symbol is correct
-- Try different date range
-- Check if market is open for real-time data
+**Solution:**
+- Reduce `--grid-size` (try 100 or 150)
+- Reduce `--steps`
+- Close other applications
 
-### Issue: Dashboard doesn't open
+### Issue: Slow performance
 
-**Solution**:
-- Check port 8050 is not in use
-- Try different port in config.yaml
-- Ensure dash packages are installed
+**Solution:**
+- Use `--no-visualize` flag
+- Reduce grid size
+- Reduce sensor resolution in config
 
-## 🔮 Future Enhancements
+### Issue: Robot gets stuck in corners
 
-- Live trading with broker API integration
-- More technical indicators
-- Advanced ML models (Transformers, Reinforcement Learning)
-- Multi-timeframe analysis
-- News sentiment analysis
-- Social media sentiment integration
-- Automated strategy optimization
-- Cloud deployment support
+**Solution:**
+- Increase turn angles in config
+- Reduce collision threshold
+- Use different environment type
 
-## ⚠️ Disclaimer
+## Windows 11 Specific Features
 
-**This is a simulator for educational and testing purposes only.**
+- **Native Matplotlib Backend**: Uses TkAgg for optimal Windows performance
+- **High-DPI Support**: Automatic scaling for 4K displays
+- **Path Handling**: Windows-compatible file paths
+- **Performance Optimization**: Tuned for Windows 11 threading model
 
-- Past performance does not guarantee future results
-- Trading involves risk of financial loss
-- Always do your own research before trading
-- Start with paper trading before risking real money
-- The authors are not responsible for any financial losses
+## Advanced Usage
 
-## 📝 License
+### Custom Environments
 
-This project is for educational purposes. Use at your own risk.
+Create custom environments by modifying `Environment` class:
 
-## 🤝 Contributing
+```python
+from vacuum_mapper.utils import Environment
 
-Contributions are welcome! Please:
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Submit a pull request
+env = Environment(size=(300, 300))
+env.create_empty_room()
+env.add_circular_obstacle(center=(150, 150), radius=30)
+```
 
-## 📧 Support
+### Programmatic Access
 
-For issues, questions, or suggestions:
-- Open an issue on GitHub
-- Check the troubleshooting section
-- Review the configuration options
+Use vacuum mapper as a library:
 
-## 🎉 Acknowledgments
+```python
+from vacuum_mapper import VacuumMapper
+from vacuum_mapper.utils import Environment
 
-Built with:
-- Python
-- pandas, numpy, scikit-learn
-- TensorFlow/Keras
-- yfinance
-- Plotly & Dash
-- And many other open-source libraries
+# Create mapper
+mapper = VacuumMapper(grid_size=(200, 200))
+
+# Create environment
+env = Environment(size=(200, 200))
+env.create_room_with_furniture(num_obstacles=3)
+
+# Explore
+result = mapper.explore_and_map(env, max_steps=500, visualize=True)
+
+# Plan coverage
+coverage = mapper.plan_coverage(algorithm='boustrophedon')
+
+# Visualize
+mapper.visualize_results(coverage_path=coverage['path'])
+```
+
+### Save and Load Maps
+
+```python
+# Save map
+mapper.slam.save_map('my_map.npy')
+
+# Load map
+mapper.slam.load_map('my_map.npy')
+```
+
+## Future Enhancements
+
+- [ ] ROS integration for real robot hardware
+- [ ] Deep learning-based obstacle classification
+- [ ] Multi-floor mapping support
+- [ ] Dynamic obstacle handling (moving objects)
+- [ ] 3D mapping with depth sensors
+- [ ] Cloud-based map sharing
+- [ ] Mobile app control interface
+- [ ] Voice command integration
+- [ ] Reinforcement learning for optimal paths
+- [ ] Multi-robot coordination
+
+## Technical Details
+
+### SLAM Implementation
+
+- **Algorithm**: Grid-based occupancy mapping with particle filter
+- **Localization**: Monte Carlo Localization (MCL)
+- **Mapping**: Probabilistic occupancy grid
+- **Sensor Model**: Gaussian noise model
+- **Motion Model**: Differential drive kinematics
+
+### Coverage Planning
+
+- **Boustrophedon**: Cell decomposition with back-and-forth sweeping
+- **Spiral**: Expanding/contracting spiral from seed point
+- **Optimization**: Douglas-Peucker path simplification
+
+### Performance
+
+- **Grid Updates**: O(n) per sensor beam
+- **Particle Filter**: O(m*k) where m=particles, k=sensors
+- **Path Planning**: O(n²) where n=grid cells
+- **Visualization**: 10-20 FPS real-time updates
+
+## Contributing
+
+Contributions welcome! Areas for improvement:
+
+1. Additional coverage algorithms (e.g., spanning tree)
+2. Better exploration strategies
+3. Multi-robot support
+4. Hardware integration examples
+5. Performance optimizations
+
+## License
+
+This project is for educational and research purposes.
+
+## Acknowledgments
+
+Built using:
+- **NumPy** - Numerical computing
+- **Matplotlib** - Visualization
+- **SciPy** - Scientific algorithms
+
+Inspired by:
+- iRobot Roomba algorithms
+- ROS Navigation Stack
+- Probabilistic Robotics (Thrun, Burgard, Fox)
+
+## Support
+
+For issues or questions:
+1. Check this README
+2. Review `vacuum_config.yaml` settings
+3. Enable debug logging
+4. Open an issue on GitHub
 
 ---
 
-**Happy Trading! 📈🚀**
+**Happy Mapping!**
 
-Remember: Always test strategies thoroughly with backtesting and paper trading before considering real trading.
+*Autonomous robotic vacuum cleaning powered by SLAM technology*
