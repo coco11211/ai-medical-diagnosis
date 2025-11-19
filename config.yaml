@@ -1,0 +1,85 @@
+# Trading Bot Simulator Configuration
+
+# Trading Parameters
+trading:
+  initial_capital: 100000.0
+  commission: 0.001  # 0.1%
+  slippage: 0.0005   # 0.05%
+
+# Risk Management
+risk_management:
+  max_position_size: 0.2  # 20% of portfolio per position
+  max_portfolio_risk: 0.02  # 2% max loss per trade
+  stop_loss_percent: 0.05  # 5% stop loss
+  take_profit_percent: 0.15  # 15% take profit
+  max_drawdown: 0.20  # 20% max drawdown
+
+# Strategy Parameters
+strategies:
+  macd:
+    fast_period: 12
+    slow_period: 26
+    signal_period: 9
+
+  rsi:
+    period: 14
+    oversold: 30
+    overbought: 70
+
+  bollinger:
+    period: 20
+    std_dev: 2
+
+# Data Sources
+data_sources:
+  primary: "yfinance"  # yfinance, alpha_vantage
+  alpha_vantage_api_key: "YOUR_API_KEY_HERE"
+  update_interval: 60  # seconds
+
+# Assets to Trade
+assets:
+  stocks:
+    - AAPL
+    - MSFT
+    - GOOGL
+    - AMZN
+    - TSLA
+  crypto:
+    - BTC-USD
+    - ETH-USD
+  forex:
+    - EURUSD=X
+
+# Backtesting
+backtesting:
+  start_date: "2020-01-01"
+  end_date: "2024-12-31"
+  data_interval: "1d"  # 1m, 5m, 15m, 1h, 1d
+
+# Machine Learning
+ml:
+  model_type: "lstm"  # lstm, random_forest, gradient_boosting
+  lookback_period: 60
+  prediction_horizon: 5
+  train_test_split: 0.8
+
+# Alerts
+alerts:
+  enable_email: false
+  enable_desktop: true
+  alert_on_trade: true
+  alert_on_signal: true
+  alert_on_risk_breach: true
+
+# Dashboard
+dashboard:
+  host: "127.0.0.1"
+  port: 8050
+  debug: true
+  auto_refresh: 30  # seconds
+
+# Paper Trading
+paper_trading:
+  enabled: true
+  simulate_latency: true
+  latency_ms: 100
