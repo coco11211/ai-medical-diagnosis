@@ -1,5 +1,5 @@
 """
-Autonomous Trading Bot Simulator - Main Entry Point
+Autonomous Trading Bot Simulator & Audio Noise Cancellation - Main Entry Point
 
 A comprehensive trading bot with:
 - Multiple strategy algorithms (MACD, RSI, Bollinger Bands)
@@ -13,6 +13,13 @@ A comprehensive trading bot with:
 - Performance analytics dashboard
 - Alert system
 
+Audio Noise Cancellation Features:
+- Real-time live audio processing
+- Multiple noise cancellation algorithms (Spectral Subtraction, Wiener Filter)
+- Low-latency processing optimized for Windows 11
+- Audio file processing and batch conversion
+- Real-time monitoring and visualization
+
 Full Windows 11 compatibility
 """
 import argparse
@@ -22,6 +29,8 @@ from datetime import datetime
 
 from src.engine import TradingEngine
 from src.analytics import Dashboard
+from src.audio import AudioProcessor, AudioConfig
+from src.audio.audio_visualizer import ConsoleVisualizer
 
 # Setup logging
 logging.basicConfig(
@@ -36,6 +45,135 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
+def handle_audio_mode(args):
+    """Handle audio processing modes."""
+    try:
+        if args.mode == 'audio-devices':
+            # List audio devices
+            print("\n" + "="*70)
+            print("AUDIO DEVICES")
+            print("="*70)
+
+            config = AudioConfig()
+            processor = AudioProcessor(config)
+            processor.list_devices()
+
+            return
+
+        elif args.mode == 'audio-file':
+            # Process audio file
+            if not args.audio_input:
+                print("Error: --audio-input required for audio-file mode")
+                sys.exit(1)
+
+            print("\n" + "="*70)
+            print("AUDIO FILE PROCESSING")
+            print("="*70)
+            print(f"Input: {args.audio_input}")
+
+            # Create audio config
+            config = AudioConfig(
+                noise_reduction_strength=args.noise_reduction
+            )
+
+            processor = AudioProcessor(config)
+
+            # Capture noise profile if requested
+            if args.noise_profile:
+                print("\nCapturing noise profile from file beginning...")
+                # Use first 2 seconds as noise profile
+                from src.audio.audio_utils import AudioFileHandler
+                noise_audio, sr, ch = AudioFileHandler.read_wav(args.audio_input)
+                noise_samples = min(len(noise_audio), int(2.0 * sr))
+                processor.canceller.set_noise_profile(noise_audio[:noise_samples])
+
+            # Process file
+            output_file = processor.process_file(args.audio_input, args.audio_output)
+            print(f"Output: {output_file}")
+            print("="*70 + "\n")
+
+        elif args.mode == 'audio-live':
+            # Real-time audio processing
+            print("\n" + "="*70)
+            print("REAL-TIME AUDIO NOISE CANCELLATION")
+            print("="*70)
+            print("Windows 11 Optimized Real-Time Audio Processing")
+            print(f"Latency Mode: {args.latency_mode.upper()}")
+            print(f"Noise Reduction: {args.noise_reduction * 100:.0f}%")
+            print("="*70)
+
+            # Create audio config
+            config = AudioConfig(
+                noise_reduction_strength=args.noise_reduction,
+                latency_mode=args.latency_mode,
+                monitor_enabled=args.monitor,
+                save_output=args.record
+            )
+
+            processor = AudioProcessor(config)
+
+            # List available devices
+            processor.list_devices()
+
+            # Capture noise profile if requested
+            if args.noise_profile:
+                processor.capture_noise_profile()
+
+            # Start processing
+            print("\nStarting real-time audio processing...")
+            print("Press Ctrl+C to stop\n")
+
+            # Start visualization if requested
+            visualizer = None
+            if args.visualize:
+                try:
+                    from src.audio.audio_visualizer import AudioVisualizer
+                    visualizer = AudioVisualizer(config)
+                    processor.capture.register_callback(
+                        lambda audio, time: visualizer.update_audio(audio)
+                    )
+                    import threading
+                    viz_thread = threading.Thread(
+                        target=lambda: visualizer.start(blocking=False),
+                        daemon=True
+                    )
+                    viz_thread.start()
+                except Exception as e:
+                    print(f"Warning: Visualization not available: {e}")
+
+            try:
+                processor.start_processing(monitor=args.monitor, record=args.record)
+
+                # Keep running until interrupted
+                import time
+                while True:
+                    time.sleep(0.1)
+
+            except KeyboardInterrupt:
+                print("\n\nStopping audio processing...")
+                processor.stop_processing()
+
+                if visualizer:
+                    visualizer.stop()
+
+                # Print statistics
+                stats = processor.get_statistics()
+                if stats:
+                    print("\n" + "="*70)
+                    print("PROCESSING STATISTICS")
+                    print("="*70)
+                    print(f"Frames Processed: {stats['frames_processed']}")
+                    print(f"Average Latency: {stats['average_latency_ms']:.2f} ms")
+                    print(f"Min Latency: {stats['min_latency_ms']:.2f} ms")
+                    print(f"Max Latency: {stats['max_latency_ms']:.2f} ms")
+                    print(f"Real-time Factor: {stats['realtime_factor']:.2f}x")
+                    print("="*70 + "\n")
+
+    except Exception as e:
+        logger.error(f"Audio processing error: {e}", exc_info=True)
+        sys.exit(1)
+
+
 def main():
     """Main entry point for trading bot."""
     parser = argparse.ArgumentParser(
@@ -45,8 +183,9 @@ def main():
 
     parser.add_argument(
         'mode',
-        choices=['backtest', 'paper', 'optimize', 'ml', 'dashboard', 'compare'],
-        help='Trading bot mode'
+        choices=['backtest', 'paper', 'optimize', 'ml', 'dashboard', 'compare',
+                 'audio-live', 'audio-file', 'audio-devices'],
+        help='Operating mode (trading or audio processing)'
     )
 
     parser.add_argument(
@@ -97,7 +236,64 @@ def main():
         help='Portfolio optimization method'
     )
 
+    # Audio processing arguments
+    parser.add_argument(
+        '--audio-input',
+        type=str,
+        help='Input audio file path (for audio-file mode)'
+    )
+
+    parser.add_argument(
+        '--audio-output',
+        type=str,
+        help='Output audio file path (for audio-file mode)'
+    )
+
+    parser.add_argument(
+        '--noise-profile',
+        action='store_true',
+        help='Capture noise profile before processing'
+    )
+
+    parser.add_argument(
+        '--noise-reduction',
+        type=float,
+        default=0.8,
+        help='Noise reduction strength (0.0 to 1.0, default: 0.8)'
+    )
+
+    parser.add_argument(
+        '--latency-mode',
+        type=str,
+        choices=['low', 'medium', 'high'],
+        default='low',
+        help='Latency mode for real-time processing (default: low)'
+    )
+
+    parser.add_argument(
+        '--monitor',
+        action='store_true',
+        help='Enable audio monitoring (playback cleaned audio)'
+    )
+
+    parser.add_argument(
+        '--record',
+        action='store_true',
+        help='Record processed audio to file'
+    )
+
+    parser.add_argument(
+        '--visualize',
+        action='store_true',
+        help='Enable real-time audio visualization'
+    )
+
     args = parser.parse_args()
+
+    # Handle audio modes separately
+    if args.mode.startswith('audio-'):
+        handle_audio_mode(args)
+        return
 
     # Initialize trading engine
     logger.info("Initializing trading engine...")
@@ -267,9 +463,10 @@ if __name__ == "__main__":
     print("""
 ╔══════════════════════════════════════════════════════════════════════╗
 ║                                                                      ║
-║         AUTONOMOUS TRADING BOT SIMULATOR v1.0                        ║
+║    AUTONOMOUS TRADING BOT & AUDIO NOISE CANCELLATION v2.0            ║
 ║                                                                      ║
-║  Advanced Trading Bot with ML, Risk Management & Portfolio Optimization║
+║  Trading: Advanced Bot with ML, Risk Management & Portfolio Optimization║
+║  Audio: Real-time Noise Cancellation with Low-Latency Processing     ║
 ║                  Full Windows 11 Compatibility                       ║
 ║                                                                      ║
 ╚══════════════════════════════════════════════════════════════════════╝

@@ -1,6 +1,9 @@
-# Autonomous Trading Bot Simulator
+# Autonomous Trading Bot & Audio Noise Cancellation
 
-A comprehensive autonomous trading bot simulator built for Windows 11 with advanced features including multiple trading strategies, backtesting, risk management, paper trading, machine learning predictions, and real-time analytics.
+A dual-purpose application built for Windows 11 featuring:
+
+1. **Trading Bot Simulator**: Advanced autonomous trading with multiple strategies, backtesting, risk management, machine learning predictions, and real-time analytics
+2. **Audio Noise Cancellation**: Real-time audio processing with low-latency noise removal optimized for Windows 11
 
 ## 🚀 Features
 
@@ -68,6 +71,34 @@ A comprehensive autonomous trading bot simulator built for Windows 11 with advan
 - Risk breach warnings
 - Daily performance summaries
 
+---
+
+## 🎤 Audio Noise Cancellation Features
+
+### Real-Time Audio Processing
+- **Live Noise Cancellation**: Process audio in real-time with minimal latency
+- **Multiple Algorithms**:
+  - Spectral Subtraction
+  - Wiener Filtering
+  - NoiseReduce Integration
+- **Windows 11 Optimized**: WASAPI support for ultra-low latency
+- **Adaptive Noise Profiling**: Learn and remove specific noise patterns
+- **File Processing**: Batch process audio files with noise reduction
+- **Live Monitoring**: Real-time audio visualization and statistics
+
+### Audio Performance
+- **Latency**: As low as 10-20ms (configurable)
+- **Sample Rates**: 8kHz to 96kHz
+- **Real-time Factor**: < 0.5x (processes faster than real-time)
+- **Quality**: Professional-grade noise cancellation
+
+### Use Cases
+- Video calls and conferencing
+- Live streaming and podcasting
+- Gaming voice chat
+- Content creation and recording
+- Audio cleanup and restoration
+
 ## 📋 Requirements
 
 - **Operating System**: Windows 11 (also compatible with Windows 10, Linux, macOS)
@@ -105,7 +136,9 @@ Edit `config.yaml` to customize:
 
 ## 🎯 Quick Start
 
-### 1. Run a Backtest
+### Trading Features
+
+#### 1. Run a Backtest
 
 Test a strategy on historical data:
 
@@ -185,6 +218,58 @@ python main.py dashboard
 
 Open your browser to: http://127.0.0.1:8050
 
+---
+
+### Audio Features
+
+#### 1. List Audio Devices
+
+Find your input/output devices:
+
+```bash
+python main.py audio-devices
+```
+
+#### 2. Real-Time Noise Cancellation
+
+Start live audio processing:
+
+```bash
+# Basic usage with monitoring
+python main.py audio-live --monitor
+
+# With noise profile capture
+python main.py audio-live --monitor --noise-profile
+
+# Low latency for gaming
+python main.py audio-live --monitor --latency-mode low
+
+# High quality recording
+python main.py audio-live --monitor --record --latency-mode high --noise-reduction 0.9
+```
+
+#### 3. Process Audio Files
+
+Clean up existing audio files:
+
+```bash
+# Process a single file
+python main.py audio-file --audio-input input.wav --audio-output cleaned.wav
+
+# With noise profile from file
+python main.py audio-file --audio-input input.wav --noise-profile --noise-reduction 0.8
+```
+
+**Audio Command Options**:
+- `--monitor`: Enable real-time audio playback
+- `--record`: Save processed audio to file
+- `--noise-profile`: Capture noise profile before processing
+- `--noise-reduction`: Strength (0.0 to 1.0, default: 0.8)
+- `--latency-mode`: low/medium/high (default: low)
+- `--visualize`: Enable real-time waveform visualization
+
+**For detailed audio documentation**, see [AUDIO_GUIDE.md](AUDIO_GUIDE.md)
+
 ## 📊 Configuration
 
 ### Trading Parameters
@@ -241,16 +326,30 @@ trading-bot-simulator/
 │   ├── ml/               # Machine learning models
 │   ├── analytics/        # Dashboard and analytics
 │   ├── alerts/           # Alert system
-│   └── engine/           # Main trading engine
+│   ├── engine/           # Main trading engine
+│   ├── audio/            # Audio noise cancellation
+│   │   ├── audio_capture.py      # Real-time audio capture
+│   │   ├── noise_canceller.py    # Noise cancellation algorithms
+│   │   ├── audio_processor.py    # Audio processing pipeline
+│   │   ├── audio_config.py       # Audio configuration
+│   │   ├── audio_utils.py        # Audio utilities
+│   │   └── audio_visualizer.py   # Real-time visualization
+│   └── examples/         # Usage examples
+│       ├── audio_live_example.py
+│       ├── audio_file_example.py
+│       └── audio_config_example.py
 ├── config.yaml           # Configuration file
 ├── requirements.txt      # Python dependencies
 ├── main.py              # Main entry point
-└── README.md            # This file
+├── README.md            # This file
+└── AUDIO_GUIDE.md       # Audio feature documentation
 ```
 
 ## 🎓 Usage Examples
 
-### Example 1: Complete Backtest Analysis
+### Trading Examples
+
+#### Example 1: Complete Backtest Analysis
 
 ```bash
 # Run backtest
@@ -285,6 +384,53 @@ python main.py paper --symbol AAPL --strategy rsi
 # Launch dashboard in another terminal
 python main.py dashboard
 ```
+
+### Audio Examples
+
+#### Example 1: Video Call Noise Reduction
+
+```bash
+# Capture ambient noise, then process live audio
+python main.py audio-live --monitor --noise-profile --latency-mode low --noise-reduction 0.7
+```
+
+#### Example 2: Podcast Recording
+
+```bash
+# Record with noise cancellation
+python main.py audio-live --record --latency-mode high --noise-reduction 0.9 --noise-profile
+```
+
+#### Example 3: Clean Existing Audio Files
+
+```bash
+# Process a recorded interview
+python main.py audio-file --audio-input interview.wav --audio-output clean_interview.wav --noise-reduction 0.85
+```
+
+#### Example 4: Using Python API
+
+```python
+from src.audio import AudioProcessor, AudioConfig
+
+# Create configuration
+config = AudioConfig(
+    latency_mode='low',
+    noise_reduction_strength=0.8
+)
+
+# Create processor
+processor = AudioProcessor(config)
+
+# Capture noise profile
+processor.capture_noise_profile(duration=2.0)
+
+# Start real-time processing
+processor.start_processing(monitor=True)
+```
+
+For more examples, see `src/examples/audio_*.py`
+
 
 ## 📈 Performance Metrics
 
@@ -372,6 +518,7 @@ pip install -r requirements.txt
 
 ## 🔮 Future Enhancements
 
+### Trading
 - Live trading with broker API integration
 - More technical indicators
 - Advanced ML models (Transformers, Reinforcement Learning)
@@ -380,6 +527,16 @@ pip install -r requirements.txt
 - Social media sentiment integration
 - Automated strategy optimization
 - Cloud deployment support
+
+### Audio
+- RNNoise deep learning noise reduction
+- Voice activity detection (VAD)
+- Echo cancellation
+- Automatic gain control (AGC)
+- Multi-channel processing
+- Real-time audio effects
+- VST plugin support
+- Integration with popular communication apps
 
 ## ⚠️ Disclaimer
 
@@ -413,15 +570,23 @@ For issues, questions, or suggestions:
 ## 🎉 Acknowledgments
 
 Built with:
-- Python
-- pandas, numpy, scikit-learn
+
+**Trading**:
+- Python, pandas, numpy, scikit-learn
 - TensorFlow/Keras
-- yfinance
+- yfinance, backtrader
 - Plotly & Dash
-- And many other open-source libraries
+
+**Audio**:
+- sounddevice, scipy
+- noisereduce
+- matplotlib
+- numpy, librosa
 
 ---
 
-**Happy Trading! 📈🚀**
+**Happy Trading & Clear Audio! 📈🎤🚀**
 
-Remember: Always test strategies thoroughly with backtesting and paper trading before considering real trading.
+**Trading**: Always test strategies thoroughly with backtesting and paper trading before considering real trading.
+
+**Audio**: For comprehensive audio documentation, examples, and troubleshooting, see [AUDIO_GUIDE.md](AUDIO_GUIDE.md)
