@@ -1,0 +1,42 @@
+# Voice Assistant Configuration
+
+# Wake Word Detection
+wake_word:
+  words:
+    - "assistant"    # Primary wake word
+    - "jarvis"       # Alternative wake word
+  engine: "simple"   # Options: "porcupine", "openwakeword", "simple"
+  sensitivity: 0.5   # 0.0 to 1.0 (higher = more sensitive)
+  access_key: null   # Porcupine API key (required for porcupine engine)
+
+# Speech Recognition
+speech:
+  engine: "google"   # Options: "whisper", "google", "windows"
+  language: "en"     # Language code
+  model_size: "base" # Whisper model: "tiny", "base", "small", "medium", "large"
+  device: "cpu"      # "cpu" or "cuda"
+  timeout: 5.0       # Maximum wait time for speech (seconds)
+  phrase_timeout: 3.0 # Maximum silence time (seconds)
+
+# Natural Language Understanding
+nlu:
+  backend: "pattern" # Options: "pattern", "sklearn", "transformers"
+  model_path: null   # Path to trained model (optional)
+  intents: null      # Custom intent configuration (optional)
+
+# Text-to-Speech
+tts:
+  engine: "sapi"     # Options: "sapi" (Windows), "pyttsx3", "gtts", "edge"
+  voice: null        # Voice name (null = default)
+  rate: 150          # Speech rate (words per minute, 100-200)
+  volume: 1.0        # Volume (0.0 to 1.0)
+  language: "en-US"  # Language code
+
+# Plugins
+plugin_directory: null  # Path to custom plugins directory (optional)
+
+# CLI Mode
+speak_in_cli: false    # Speak responses in CLI mode
+
+# Advanced Settings
+logging_level: "INFO"  # "DEBUG", "INFO", "WARNING", "ERROR"

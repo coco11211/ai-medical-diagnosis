@@ -48,3 +48,28 @@ sqlalchemy>=2.0.0
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
+
+# Voice Assistant Dependencies
+# Audio processing
+pyaudio>=0.2.13
+
+# Speech recognition
+SpeechRecognition>=3.10.0
+faster-whisper>=0.9.0
+
+# Wake word detection
+openwakeword>=0.5.0
+pvporcupine>=2.2.0  # Optional: requires API key
+
+# Text-to-Speech
+pyttsx3>=2.90
+gtts>=2.4.0
+edge-tts>=6.1.0
+pygame>=2.5.0  # For audio playback
+
+# Windows-specific (for SAPI support on Windows 11)
+pywin32>=306; sys_platform == 'win32'
+
+# NLU (optional, for advanced intent classification)
+# spacy>=3.7.0  # Uncomment if using spaCy
+# transformers>=4.35.0  # Uncomment if using transformers

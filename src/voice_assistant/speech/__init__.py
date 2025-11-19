@@ -1,0 +1,5 @@
+"""Speech recognition module"""
+
+from .recognizer import SpeechRecognizer
+
+__all__ = ["SpeechRecognizer"]
