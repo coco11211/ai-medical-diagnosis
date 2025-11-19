@@ -48,3 +48,38 @@ sqlalchemy>=2.0.0
 # Testing
 pytest>=7.4.0
 pytest-cov>=4.1.0
+
+# ============================================
+# Neural Style Transfer Suite Requirements
+# ============================================
+
+# Deep Learning Framework
+torch>=2.0.0
+torchvision>=0.15.0
+torchaudio>=2.0.0
+
+# Computer Vision
+opencv-python>=4.8.0
+opencv-contrib-python>=4.8.0
+Pillow>=10.0.0
+
+# Image Processing
+scikit-image>=0.21.0
+imageio>=2.31.0
+imageio-ffmpeg>=0.4.9
+
+# Progress and Utilities
+tqdm>=4.66.0
+colorama>=0.4.6
+
+# Video Processing
+moviepy>=1.0.3
+ffmpeg-python>=0.2.0
+
+# GPU Acceleration (CUDA support via PyTorch)
+# Note: CUDA toolkit should be installed separately for full GPU support
+# PyTorch with CUDA can be installed via:
+# pip install torch torchvision --index-url https://download.pytorch.org/whl/cu118
+
+# Additional ML utilities
+scipy>=1.11.0

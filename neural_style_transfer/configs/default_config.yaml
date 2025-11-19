@@ -1,0 +1,90 @@
+# Neural Style Transfer Suite - Default Configuration
+
+# GPU Settings
+gpu:
+  device: "auto"  # auto, cuda, cuda:0, cpu
+  enable_mixed_precision: true
+  benchmark_mode: true
+  deterministic: false
+
+# Model Settings
+models:
+  vgg19:
+    content_layers:
+      - conv4_2
+    style_layers:
+      - conv1_1
+      - conv2_1
+      - conv3_1
+      - conv4_1
+      - conv5_1
+    content_weight: 1.0
+    style_weight: 1000000.0
+    tv_weight: 0.01
+
+  resnet:
+    num_residual_blocks: 5
+    content_weight: 1.0
+    style_weight: 100000.0
+    tv_weight: 0.000001
+
+# Training Settings
+training:
+  epochs: 2
+  batch_size: 4
+  learning_rate: 0.001
+  save_every: 500
+  log_every: 100
+  image_size: 256
+
+# Video Processing
+video:
+  default_codec: "mp4v"
+  default_fps: 30
+  temporal_smoothing: true
+  temporal_weight: 0.3
+  max_size: 1920  # For HD processing
+
+# Webcam Settings
+webcam:
+  default_camera: 0
+  default_width: 1280
+  default_height: 720
+  show_fps: true
+  mirror: true
+  temporal_smoothing: true
+
+# Batch Processing
+batch:
+  num_workers: 4
+  quality: 95
+  preserve_names: true
+
+# Style Library
+library:
+  path: "./style_library"
+  auto_create_previews: true
+  preview_size: 256
+
+# Export Settings
+export:
+  gif:
+    default_fps: 10
+    default_size: 480
+    optimize: true
+  video:
+    default_crf: 23
+    preset: "medium"
+
+# Logging
+logging:
+  level: "INFO"  # DEBUG, INFO, WARNING, ERROR
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
+  save_to_file: false
+  log_file: "neural_style_transfer.log"
+
+# Performance
+performance:
+  auto_optimize: true
+  memory_efficient: true
+  clear_cache_frequency: 100  # frames
